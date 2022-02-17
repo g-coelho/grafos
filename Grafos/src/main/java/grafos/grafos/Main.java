@@ -9,5 +9,15 @@ package grafos.grafos;
  * @author gabri
  */
 public class Main {
+    public static void main(String[] args) {
+        Grafo g = new Grafo();
+        g.adicionarVertice("A");
+        g.adicionarVertice("B");
+        g.adicionarVertice("C");
+        g.adicionarAresta("A", "B");
+        g.adicionarAresta("A", "C");
+        g.adicionarAresta("C", "B");
+        System.out.println(g.toString());      
+    }
     
 }
