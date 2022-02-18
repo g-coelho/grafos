@@ -32,8 +32,7 @@ public class Grafo {
         verticesMap.put(v.getNome(), v);
     }
     
-    public void removerVertice(String nome){   
-        
+    public void removerVertice(String nome){         
         arestasMap.entrySet().removeIf(chave -> chave.getValue().getOrigem().getNome().equals(nome));
         arestasMap.entrySet().removeIf(chave -> chave.getValue().getOrigem().getNome().equals(nome));
         vertices.remove(verticesMap.get(nome));
