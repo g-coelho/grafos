@@ -32,22 +32,12 @@ public class Grafo {
         verticesMap.put(v.getNome(), v);
     }
     
-    public void removerVertice(String nome){        
-        Iterator<Aresta> itr = arestas.iterator();        
-        while (itr.hasNext()){
-            Aresta a = itr.next();            
-            if(a.getOrigem() == verticesMap.get(nome) || a.getDestino() == verticesMap.get(nome)){               
-                itr.remove();
-            }               
-        }
-
-        //Implementar remoção das arestas que possuem o vértice nome do arestasMap
+    public void removerVertice(String nome){   
         
-        
+        arestasMap.entrySet().removeIf(chave -> chave.getValue().getOrigem().getNome().equals(nome));
+        arestasMap.entrySet().removeIf(chave -> chave.getValue().getOrigem().getNome().equals(nome));
         vertices.remove(verticesMap.get(nome));
         verticesMap.remove(nome);   
-        
-        
     }
     
     public void adicionarAresta(String origem, String destino){

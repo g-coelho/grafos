@@ -17,7 +17,9 @@ public class Main {
         g.adicionarAresta("A", "B");
         g.adicionarAresta("A", "C");
         g.adicionarAresta("C", "B");
-        System.out.println(g.toString());      
+        System.out.println(g.toString());  
+        g.removerVertice("A");
+        System.out.println(g.toString());
     }
     
 }
