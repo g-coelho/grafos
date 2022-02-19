@@ -44,10 +44,11 @@ public class Grafo {
         verticesMap.remove(nome);   
     }
     
-    public void adicionarAresta(String origem, String destino, int Valor){
+    public void adicionarAresta(String origem, String destino, int valor){
         Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino));        
         arestas.add(a);     
         arestasMap.put(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome(), a);
+        alterarValorAresta(origem, destino, valor);
     }
     
     public void removerAresta(String origem, String destino){
@@ -61,6 +62,54 @@ public class Grafo {
         arestas.add(arestasMap.get(origem + destino));
     }
 
+    
+    public int [][] gerarMatrixAdjacencia(){        
+        int [][] matrAdj;
+        matrAdj = new int[vertices.size()][vertices.size()];
+
+        for(Aresta a: arestas){
+            Vertice o = a.getOrigem();
+            Vertice d = a.getDestino(); 
+            
+            if (valorado == true){ 
+                matrAdj[vertices.indexOf(o)][vertices.indexOf(d)] = (a.getValor() == 0)? 1 : a.getValor();            
+                if (orientado == false) {                
+                    matrAdj[vertices.indexOf(d)][vertices.indexOf(o)] = (a.getValor() == 0)? 1 : a.getValor(); 
+                }                               
+            }           
+            else{ 
+                matrAdj[vertices.indexOf(o)][vertices.indexOf(d)] = 1;            
+                if (orientado == false) {                
+                    matrAdj[vertices.indexOf(d)][vertices.indexOf(o)] = 1; 
+                }                
+            }
+        }
+        return  matrAdj;        
+    }      
+    
+    
+    public String imprimirMatrizAdjacencia(){
+        
+        int r[][] = gerarMatrixAdjacencia();
+        StringBuilder s = new StringBuilder();
+        
+        for (Vertice v : vertices)
+        {
+          s.append(v.getNome()).append(": ");
+          
+          for (int i = 0; i < vertices.size(); i++) {                
+            s.append(r[vertices.indexOf(v)][i]).append(" ");
+          }
+          s.append("\n");                        
+        }
+        return s.toString(); 
+
+    }        
+    
+    
+    
+    
+    
     
     @Override
     public String toString() {

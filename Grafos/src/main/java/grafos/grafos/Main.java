@@ -10,13 +10,15 @@ package grafos.grafos;
  */
 public class Main {
     public static void main(String[] args) {
-        Grafo g = new Grafo(true, false);
+        Grafo g = new Grafo(false, true);
         g.adicionarVertice("A");
         g.adicionarVertice("B");
         g.adicionarVertice("C");
-        g.adicionarAresta("A", "B", 0);
-        g.adicionarAresta("A", "C", 0);
-        g.adicionarAresta("C", "B", 0);
+        g.adicionarAresta("A", "B", 7);
+        g.adicionarAresta("A", "C", 5);
+        g.adicionarAresta("C", "B", 1);
+        
+        System.out.println(g.imprimirMatrizAdjacencia());
 
 
     }
