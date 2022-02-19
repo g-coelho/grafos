@@ -18,12 +18,17 @@ public class Grafo {
     private HashMap<String, Vertice> verticesMap;
     private ArrayList<Aresta> arestas;
     private HashMap<String, Aresta> arestasMap;
+    private boolean orientado;
+    private boolean valorado;
+    
 
-    public Grafo() {
+    public Grafo(boolean orientado, boolean valorado) {
         this.vertices = new ArrayList<>();
         this.arestas = new ArrayList<>();
         this.verticesMap = new HashMap<>();
         this.arestasMap = new HashMap<>();
+        this.orientado = orientado;
+        this.valorado = valorado;
     }
 
     public void adicionarVertice(String nome){
@@ -34,13 +39,13 @@ public class Grafo {
     
     public void removerVertice(String nome){         
         arestasMap.entrySet().removeIf(chave -> chave.getValue().getOrigem().getNome().equals(nome));
-        arestasMap.entrySet().removeIf(chave -> chave.getValue().getOrigem().getNome().equals(nome));
+        arestasMap.entrySet().removeIf(chave -> chave.getValue().getDestino().getNome().equals(nome));
         vertices.remove(verticesMap.get(nome));
         verticesMap.remove(nome);   
     }
     
-    public void adicionarAresta(String origem, String destino){
-        Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino));  
+    public void adicionarAresta(String origem, String destino, int Valor){
+        Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino));        
         arestas.add(a);     
         arestasMap.put(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome(), a);
     }
@@ -49,7 +54,14 @@ public class Grafo {
         arestasMap.remove(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome());
         arestas.remove(arestasMap.get(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome()));
     }
+    
+    public void alterarValorAresta(String origem, String destino, int valor){
+        arestasMap.get(origem + destino).setValor(valor);
+        arestas.remove(arestasMap.get(origem + destino));
+        arestas.add(arestasMap.get(origem + destino));
+    }
 
+    
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

@@ -11,6 +11,7 @@ package grafos.grafos;
 public class Aresta {    
     private Vertice origem;
     private Vertice destino;
+    private int valor;
 
     public Aresta(Vertice origem, Vertice destino) {
         this.origem = origem;
@@ -32,6 +33,16 @@ public class Aresta {
     public void setDestino(Vertice destino) {
         this.destino = destino;
     }
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+    
+    
 
 
 
