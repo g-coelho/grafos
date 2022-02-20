@@ -107,36 +107,23 @@ public class Grafo {
     }        
     
     public String imprimirMatrizIncidencia(){
-        
-        int adj[][] = gerarMatrixAdjacencia();
+        int[][] matrizInc = new int[vertices.size()][arestas.size()];
         StringBuilder s = new StringBuilder();
-        int k = 0;
+        int i = 0;
         
         for (Aresta a : arestas){
-            adj[vertices.indexOf(a.getOrigem())][vertices.indexOf(a.getDestino())] = arestas.indexOf(a)+1;
-            adj[vertices.indexOf(a.getDestino())][vertices.indexOf(a.getOrigem())] = arestas.indexOf(a)+1;
+            if (a.getOrigem() == a.getDestino()) {
+                matrizInc[vertices.indexOf(a.getDestino())][arestas.indexOf(a)] = 2;
+            }
+            else{            
+                matrizInc[vertices.indexOf(a.getDestino())][arestas.indexOf(a)] = 1;
+                matrizInc[vertices.indexOf(a.getOrigem())][arestas.indexOf(a)] = 1;
+            }
         }
 
-        int[][] matrizInc = new int[vertices.size()][arestas.size()];
-        for (int i = 0; i < adj.length; i++) {
-            
-            for (int j = i + 1; j < adj[i].length; j++) {
-                int valAresta = adj[i][j];
-  
-                if (valAresta > 0) {
-                    matrizInc[i][valAresta - 1] = 1;
-                    matrizInc[j][valAresta - 1] = 1;
-                }
-            }
-            
-        }
-        
-        
-        
-        for (int[] row : matrizInc) {           
-            
-            s.append(vertices.get(k).getNome() + ": ");
-            k++;
+        for (int[] row : matrizInc) {                    
+            s.append(vertices.get(i).getNome() + ": ");
+            i++;
             
             for (int val : row) {
                 s.append(val + " ");                
