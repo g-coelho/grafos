@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  *
@@ -85,7 +86,29 @@ public class Grafo {
             }
         }
         return  matrAdj;        
-    }      
+    }     
+    
+    public LinkedList<Integer>[] gerarListaAdjacencia(){
+        
+        LinkedList<Integer> adjList [];
+        adjList = new LinkedList[vertices.size()];        
+        for (int i = 0; i <vertices.size() ; i++) {
+                adjList[i] = new LinkedList<>();
+            }
+                
+        for (Aresta a : arestas){            
+            if(adjList[vertices.indexOf(a.getOrigem())].contains(vertices.indexOf(a.getDestino())) == false)
+                adjList[vertices.indexOf(a.getOrigem())].addFirst(vertices.indexOf(a.getDestino()));            
+            
+            if (orientado == false){
+                if (adjList[vertices.indexOf(a.getDestino())].contains(vertices.indexOf(a.getOrigem())) == false)
+                    adjList[vertices.indexOf(a.getDestino())].addFirst(vertices.indexOf(a.getOrigem()));  
+                    
+            }
+
+        }        
+        return adjList;        
+    }    
     
     
     public String imprimirMatrizAdjacencia(){
@@ -132,26 +155,23 @@ public class Grafo {
         }        
         return s.toString(); 
     }    
-    
-    
-    
-    
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
+
+    public String imprimirListAdjacencia(){        
+        LinkedList<Integer> list [] = gerarListaAdjacencia();
+        StringBuilder s = new StringBuilder();        
+
+        for (int i = 0; i < vertices.size() ; i++) {
+            if(list[i].size()>0) {                
+                s.append(vertices.get(i).getNome() + ": ");                
+                for (int j = 0; j < list[i].size(); j++) {
+                    s.append(vertices.get(list[i].get(j)).getNome() + " ");
+                }
+                s.append("\n");
+            }
+        }        
         
-        for (Vertice v : vertices){
-            s.append(v.getNome() + ", ");
-        }
-        
-        s.append("\n");
-        
-        for(String nome: arestasMap.keySet()){
-            s.append(nome + ", ");
-        }
         return s.toString();
     }
-    
     
     
     

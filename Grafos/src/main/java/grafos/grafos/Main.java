@@ -17,9 +17,8 @@ public class Main {
         g.adicionarAresta("A", "B", 7);
         g.adicionarAresta("A", "C", 5);
         g.adicionarAresta("C", "B", 1);
-        
-        System.out.println(g.imprimirMatrizAdjacencia());
-        System.out.println(g.imprimirMatrizIncidencia());
+        g.adicionarAresta("A", "A", 0);
+        System.out.println(g.imprimirListAdjacencia());
 
 
     }
