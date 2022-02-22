@@ -62,7 +62,6 @@ public class Grafo {
         arestas.remove(arestasMap.get(origem + destino));
         arestas.add(arestasMap.get(origem + destino));
     }
-
     
     public int [][] gerarMatrixAdjacencia(){        
         int [][] matrAdj;
@@ -108,7 +107,44 @@ public class Grafo {
 
         }        
         return adjList;        
-    }    
+    }        
+    
+    public int retornarOrdemGrafo(){      
+        return vertices.size();
+    }
+    
+    public String retornarGrauVertices(){
+        HashMap<String, Integer> mapGrau = new HashMap<>();
+        StringBuilder s = new StringBuilder();
+        
+        if (orientado == false) {
+            for (Vertice v: vertices) {
+                mapGrau.put(v.getNome(), 0);                
+            }
+            for (Aresta a: arestas) {
+                mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
+                mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
+            }
+        }
+        else{
+            return "O grafo é orientado, portanto solicite grau de emissão ou recepção.";
+        }
+        
+        for (String vertice: mapGrau.keySet()){
+            s.append(vertice + ": " + mapGrau.get(vertice));
+            s.append("\n");
+        }        
+        return s.toString();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     public String imprimirMatrizAdjacencia(){
@@ -162,9 +198,9 @@ public class Grafo {
 
         for (int i = 0; i < vertices.size() ; i++) {
             if(list[i].size()>0) {                
-                s.append(vertices.get(i).getNome() + ": ");                
+                s.append(vertices.get(i).getNome()).append(": ");                
                 for (int j = 0; j < list[i].size(); j++) {
-                    s.append(vertices.get(list[i].get(j)).getNome() + " ");
+                    s.append(vertices.get(list[i].get(j)).getNome()).append(" ");
                 }
                 s.append("\n");
             }

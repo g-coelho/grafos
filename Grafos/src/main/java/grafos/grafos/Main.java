@@ -10,7 +10,7 @@ package grafos.grafos;
  */
 public class Main {
     public static void main(String[] args) {
-        Grafo g = new Grafo(false, true);
+        Grafo g = new Grafo(true, true);
         g.adicionarVertice("A");
         g.adicionarVertice("B");
         g.adicionarVertice("C");
@@ -18,7 +18,7 @@ public class Main {
         g.adicionarAresta("A", "C", 5);
         g.adicionarAresta("C", "B", 1);
         g.adicionarAresta("A", "A", 0);
-        System.out.println(g.imprimirListAdjacencia());
+        System.out.println(g.retornarGrauVertices());
 
 
     }
