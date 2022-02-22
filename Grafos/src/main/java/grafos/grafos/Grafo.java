@@ -113,14 +113,19 @@ public class Grafo {
         return vertices.size();
     }
     
+    public HashMap<String, Integer> mapearVertices(){
+        HashMap<String, Integer> MapVertices = new HashMap<>();        
+        for (Vertice v: vertices) {
+            MapVertices.put(v.getNome(), 0);                
+        }
+        return MapVertices;
+    }    
+    
     public String retornarGrauVertices(){
-        HashMap<String, Integer> mapGrau = new HashMap<>();
+        HashMap<String, Integer> mapGrau = mapearVertices();        
         StringBuilder s = new StringBuilder();
         
         if (orientado == false) {
-            for (Vertice v: vertices) {
-                mapGrau.put(v.getNome(), 0);                
-            }
             for (Aresta a: arestas) {
                 mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
                 mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
@@ -137,8 +142,28 @@ public class Grafo {
         return s.toString();
     }
     
+    public String retornarGrauEmissao(){
+        HashMap<String, Integer> mapEmissao = mapearVertices();
+        StringBuilder s = new StringBuilder();     
+        
+        if (orientado == true) {
+            for (Aresta a: arestas){
+                mapEmissao.replace(a.getOrigem().getNome(), mapEmissao.get(a.getOrigem().getNome())+1);
+            }       
+        }
+        
+        else{
+            return "O grafo não é orientado, portanto solicite apenas o grau dos vértices.";
+        }
+        for (String vertice: mapEmissao.keySet()){
+            s.append(vertice + ": " + mapEmissao.get(vertice));
+            s.append("\n");
+        }        
+        return s.toString();
+    }
     
     
+
     
     
     
