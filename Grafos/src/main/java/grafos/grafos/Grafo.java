@@ -162,7 +162,25 @@ public class Grafo {
         return s.toString();
     }
     
-    
+    public String retornarGrauRecepcao(){
+        HashMap<String, Integer> mapRecepcao = mapearVertices();
+        StringBuilder s = new StringBuilder();     
+        
+        if (orientado == true) {
+            for (Aresta a: arestas){
+                mapRecepcao.replace(a.getDestino().getNome(), mapRecepcao.get(a.getDestino().getNome())+1);
+            }       
+        }
+        
+        else{
+            return "O grafo não é orientado, portanto solicite apenas o grau dos vértices.";
+        }
+        for (String vertice: mapRecepcao.keySet()){
+            s.append(vertice + ": " + mapRecepcao.get(vertice));
+            s.append("\n");
+        }        
+        return s.toString();
+    }    
 
     
     
