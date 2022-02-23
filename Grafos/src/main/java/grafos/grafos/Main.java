@@ -18,7 +18,7 @@ public class Main {
         g.adicionarAresta("A", "C", 5);
         g.adicionarAresta("C", "B", 1);
         g.adicionarAresta("A", "A", 0);
-        System.out.println(g.retornarGrauRecepcao());
+        System.out.println(g.verificarSimples());
 
 
     }

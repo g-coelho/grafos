@@ -182,7 +182,22 @@ public class Grafo {
         return s.toString();
     }    
 
-    
+    public String verificarSimples(){                
+        ArrayList<String> parAresta = new ArrayList<>();
+        
+        for (Aresta a : arestas){
+            if (a.getDestino() == a.getOrigem()) {
+                return "O grafo não é simples pois possui laço.";
+            }
+        }        
+        for (Aresta a : arestas) {            
+            if (parAresta.contains(a.getOrigem().getNome() + a.getDestino().getNome()) | parAresta.contains(a.getDestino().getNome() + a.getOrigem().getNome())) {
+                return "O grafo não é simples pois possui arestas múltiplas";
+            }            
+            parAresta.add(a.getOrigem().getNome() + a.getDestino().getNome());
+        }
+        return "O grafo é simples.";      
+    }
     
     
     
