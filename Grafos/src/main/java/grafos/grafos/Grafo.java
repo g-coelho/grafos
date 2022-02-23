@@ -5,7 +5,6 @@
 package grafos.grafos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -40,7 +39,7 @@ public class Grafo {
         Iterator<Aresta> itrA = arestas.iterator();        
         while (itrA.hasNext()){
             Aresta a = itrA.next();            
-            if(a.getOrigem().getNome().equals(nome)| a.getDestino().getNome().equals(nome)){               
+            if(a.getOrigem().getNome().equals(nome)|| a.getDestino().getNome().equals(nome)){               
                 itrA.remove();
             }               
         }
@@ -49,23 +48,34 @@ public class Grafo {
         verticesMap.remove(nome);   
     }
     
-//    public void adicionarAresta(String origem, String destino, int valor){
-//        Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino));        
-//        arestas.add(a);     
-//        arestasMap.put(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome(), a);
-//        alterarValorAresta(origem, destino, valor);
-//    }
-//    
-//    public void removerAresta(String origem, String destino){
-//        arestasMap.remove(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome());
-//        arestas.remove(arestasMap.get(verticesMap.get(origem).getNome() + verticesMap.get(destino).getNome()));
-//    }
-//    
-//    public void alterarValorAresta(String origem, String destino, int valor){
-//        arestasMap.get(origem + destino).setValor(valor);
-//        arestas.remove(arestasMap.get(origem + destino));
-//        arestas.add(arestasMap.get(origem + destino));
-//    }
+    public void adicionarAresta(String origem, String destino, int valor){
+        Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino));        
+        arestas.add(a);     
+        alterarValorAresta(origem, destino, valor);
+    }
+    
+    public void removerAresta(String origem, String destino){
+        Iterator<Aresta> itrA = arestas.iterator();        
+        while (itrA.hasNext()){
+            Aresta a = itrA.next(); 
+            if (a.getOrigem().getNome().equals(origem) && a.getDestino().getNome().equals(destino)) {
+                itrA.remove();       
+            }
+        }
+    }
+    
+    
+    public void alterarValorAresta(String origem, String destino, int valor){
+        Iterator<Aresta> itrA = arestas.iterator();        
+        while (itrA.hasNext()){
+            Aresta a = itrA.next(); 
+            if (a.getOrigem().getNome().equals(origem) && a.getDestino().getNome().equals(destino)) {
+                System.out.println(a.getValor());
+            }
+        }
+
+        
+    }
     
     public int [][] gerarMatrixAdjacencia(){        
         int [][] matrAdj;
@@ -195,18 +205,13 @@ public class Grafo {
             }
         }        
         for (Aresta a : arestas) {            
-            if (parAresta.contains(a.getOrigem().getNome() + a.getDestino().getNome()) | parAresta.contains(a.getDestino().getNome() + a.getOrigem().getNome())) {
+            if (parAresta.contains(a.getOrigem().getNome() + a.getDestino().getNome()) || parAresta.contains(a.getDestino().getNome() + a.getOrigem().getNome())) {
                 return "O grafo não é simples pois possui arestas múltiplas";
             }            
             parAresta.add(a.getOrigem().getNome() + a.getDestino().getNome());
         }
         return "O grafo é simples.";      
     }
-    
-    
-    
-    
-    
     
     
     public String imprimirMatrizAdjacencia(){
