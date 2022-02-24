@@ -244,11 +244,51 @@ public class Grafo {
             int vizinho = listaAdjacencia[inicio].get(i);
             if(visitado[vizinho] == false){
                 DFS(vizinho, listaAdjacencia, visitado);
-            }
-        
-    }
-    
+            }        
+        }    
     }        
+    
+    public String verificarFonte() {
+        ArrayList<String> verticesDestino = new ArrayList<String>();
+        StringBuilder s = new StringBuilder();
+        
+        s.append("São fonte os seguintes vértices: ");
+      
+        for(Aresta a: arestas){
+            verticesDestino.add(a.getDestino().getNome());
+        }
+        
+        for(Vertice v: vertices){
+            if(verticesDestino.contains(v.getNome())== false){                
+                s.append(v.getNome());
+                s.append(", ");
+            }
+        }
+        return s.toString();        
+    }
+
+    public String verificarSumidouro() {
+        ArrayList<String> verticesOrigem = new ArrayList<String>();
+        StringBuilder s = new StringBuilder();
+        
+        s.append("São sumidouro os seguintes vértices: ");
+      
+        for(Aresta a: arestas){
+            verticesOrigem.add(a.getOrigem().getNome());
+        }
+        
+        for(Vertice v: vertices){
+            if(verticesOrigem.contains(v.getNome())== false){                
+                s.append(v.getNome());
+                s.append(", ");
+            }
+        }
+        return s.toString();         
+
+    }    
+    
+    
+    
     
     public String imprimirMatrizAdjacencia(){
         

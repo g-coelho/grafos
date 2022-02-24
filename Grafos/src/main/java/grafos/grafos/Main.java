@@ -19,7 +19,8 @@ public class Main {
         g.adicionarAresta("C", "B", 10);
         
         
-        System.out.println(g.verificarConexo());
+        System.out.println(g.verificarFonte());
+        System.out.println(g.verificarSumidouro());
 
 
 
