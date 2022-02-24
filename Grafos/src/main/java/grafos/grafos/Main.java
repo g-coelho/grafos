@@ -15,8 +15,12 @@ public class Main {
         g.adicionarVertice("B");
         g.adicionarVertice("C");
         g.adicionarAresta("A", "B", 10);
+        g.adicionarAresta("A", "C", 10); 
+        g.adicionarAresta("C", "B", 10);
+        
+        
+        System.out.println(g.verificarConexo());
 
-        System.out.println(g.imprimirMatrizAdjacencia());
 
 
     }

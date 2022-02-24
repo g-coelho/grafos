@@ -19,6 +19,7 @@ public class Grafo {
     private ArrayList<Aresta> arestas;
     private boolean orientado;
     private boolean valorado;
+    private boolean conexo;
     
 
     public Grafo(boolean orientado, boolean valorado) {
@@ -70,7 +71,6 @@ public class Grafo {
         while (itrA.hasNext()){
             Aresta a = itrA.next(); 
             if (a.getOrigem().getNome().equals(origem) && a.getDestino().getNome().equals(destino)) {
-                System.out.println(a.getValor());
             }
         }
 
@@ -80,6 +80,7 @@ public class Grafo {
     public int [][] gerarMatrixAdjacencia(){        
         int [][] matrAdj;
         matrAdj = new int[vertices.size()][vertices.size()];
+        
 
         for(Aresta a: arestas){
             Vertice o = a.getOrigem();
@@ -105,7 +106,7 @@ public class Grafo {
         
         LinkedList<Integer> adjList [];
         adjList = new LinkedList[vertices.size()];        
-        for (int i = 0; i <vertices.size() ; i++) {
+        for (int i = 0; i < vertices.size(); i++) {
                 adjList[i] = new LinkedList<>();
             }
                 
@@ -213,6 +214,41 @@ public class Grafo {
         return "O grafo é simples.";      
     }
     
+    public String verificarConexo(){
+        int v = vertices.size();
+        LinkedList<Integer> listaAdjacencia [] = gerarListaAdjacencia(); 
+        
+        boolean[] visitado = new boolean[v];
+        
+        DFS(0, listaAdjacencia, visitado);
+        
+        int count = 0;
+        for (int i = 0; i < visitado.length ; i++) {
+            if(visitado[i])
+                count++;
+        }
+        if(v == count){
+            this.conexo = true;
+            return "O grafo é conexo.";
+        }else{
+            this.conexo = false;
+            return "O grafo é desconexo.";
+        }        
+
+        
+    }    
+    
+    public void DFS(int inicio, LinkedList<Integer> listaAdjacencia [], boolean[] visitado){
+        visitado[inicio] = true;
+        for (int i = 0; i < listaAdjacencia[inicio].size() ; i++) {
+            int vizinho = listaAdjacencia[inicio].get(i);
+            if(visitado[vizinho] == false){
+                DFS(vizinho, listaAdjacencia, visitado);
+            }
+        
+    }
+    
+    }        
     
     public String imprimirMatrizAdjacencia(){
         
@@ -262,7 +298,7 @@ public class Grafo {
     public String imprimirListAdjacencia(){        
         LinkedList<Integer> list [] = gerarListaAdjacencia();
         StringBuilder s = new StringBuilder();        
-
+        
         for (int i = 0; i < vertices.size() ; i++) {
             if(list[i].size()>0) {                
                 s.append(vertices.get(i).getNome()).append(": ");                
