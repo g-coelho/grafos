@@ -151,7 +151,7 @@ public class Grafo {
         }
         
         for (String vertice: mapGrau.keySet()){
-            s.append(vertice + ": " + mapGrau.get(vertice));
+            s.append(vertice).append(": ").append(mapGrau.get(vertice));
             s.append("\n");
         }        
         return s.toString();
@@ -287,7 +287,40 @@ public class Grafo {
 
     }    
     
+    public String verificarRegular(){
+        HashMap<String, Integer> mapGrau = mapearVertices();           
+        if (orientado == false) {
+            if (orientado == false) {
+                for (Aresta a: arestas) {
+                    mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
+                    mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
+                }
+            }
+
+            int grau = mapGrau.get(vertices.get(0).getNome());
+
+            for (String v : mapGrau.keySet()){
+                if (mapGrau.get(v) != grau){
+                    return "O grafo não é regular";
+                }
+            }
+            return "O grafo é regular";
+        }
+        
+        return "O grafo é orientado então essa verificação não pode ser feita.";
+
+    }
     
+    public String verificarCompleto(){
+        int n = vertices.size();
+        int kn = (n*n - n)/2;
+        
+        if (kn != arestas.size()){
+            return "O grafo não é completo";
+        }
+        
+        return "O grafo é completo";
+    }    
     
     
     public String imprimirMatrizAdjacencia(){
