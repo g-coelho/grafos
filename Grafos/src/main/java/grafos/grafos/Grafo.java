@@ -65,7 +65,6 @@ public class Grafo {
         }
     }
     
-    
     public void alterarValorAresta(String origem, String destino, int valor){
         Iterator<Aresta> itrA = arestas.iterator();        
         while (itrA.hasNext()){
@@ -159,10 +158,9 @@ public class Grafo {
             return "O grafo é orientado, portanto solicite grau de emissão ou recepção.";
         }
     }
+        
     
-    
-    
-    public String retornarGrauEmissao(){
+    public String imprimriGrauEmissao(){
         HashMap<String, Integer> mapEmissao = mapearVertices();
         StringBuilder s = new StringBuilder();     
         
@@ -182,7 +180,7 @@ public class Grafo {
         return s.toString();
     }
     
-    public String retornarGrauRecepcao(){
+    public String imprimirrGrauRecepcao(){
         HashMap<String, Integer> mapRecepcao = mapearVertices();
         StringBuilder s = new StringBuilder();     
         
@@ -202,14 +200,14 @@ public class Grafo {
         return s.toString();
     }    
 
-    public String verificarSimples(){                
+    public String imprimirSimples(){                
         ArrayList<String> parAresta = new ArrayList<>();
         
-        for (Aresta a : arestas){
-            if (a.getDestino() == a.getOrigem()) {
-                return "O grafo não é simples pois possui laço.";
-            }
-        }        
+
+        if (verificarLaço() == true) {
+            return "O grafo não é simples pois possui laço.";
+        }
+    
         for (Aresta a : arestas) {            
             if (parAresta.contains(a.getOrigem().getNome() + a.getDestino().getNome()) || parAresta.contains(a.getDestino().getNome() + a.getOrigem().getNome())) {
                 return "O grafo não é simples pois possui arestas múltiplas";
@@ -219,7 +217,16 @@ public class Grafo {
         return "O grafo é simples.";      
     }
     
-    public String verificarConexo(){
+    public boolean verificarLaço(){
+        for (Aresta a : arestas){
+            if (a.getDestino() == a.getOrigem()) {
+                return true;
+            } 
+        }
+        return false;
+    }
+    
+    public boolean verificarConexo(){
         int v = vertices.size();
         LinkedList<Integer> listaAdjacencia [] = gerarListaAdjacencia(); 
         
@@ -234,14 +241,25 @@ public class Grafo {
         }
         if(v == count){
             this.conexo = true;
-            return "O grafo é conexo.";
+            return true;
         }else{
             this.conexo = false;
-            return "O grafo é desconexo.";
-        }        
+            return false;
+        }          
 
         
+    }
+    
+    
+    public String imprimirConexo(){
+        if (verificarConexo() == true) {
+            return "O grafo é conexo";
+        }
+        else{
+            return "O grafo é desconexo";    
+        }
     }    
+
     
     public void DFS(int inicio, LinkedList<Integer> listaAdjacencia [], boolean[] visitado){
         visitado[inicio] = true;
@@ -253,7 +271,7 @@ public class Grafo {
         }    
     }        
     
-    public String verificarFonte() {
+    public String imprimirFonte() {
         ArrayList<String> verticesDestino = new ArrayList<String>();
         StringBuilder s = new StringBuilder();
         
@@ -272,7 +290,7 @@ public class Grafo {
         return s.toString();        
     }
 
-    public String verificarSumidouro() {
+    public String imprimirSumidouro() {
         ArrayList<String> verticesOrigem = new ArrayList<String>();
         StringBuilder s = new StringBuilder();
         
@@ -292,8 +310,7 @@ public class Grafo {
 
     }    
     
-    public Boolean verificarRegular(){
-
+    public boolean verificarRegular(){
         HashMap<String, Integer> mapGrau = retornarMapGrauVertices();
         int grau = mapGrau.get(vertices.get(0).getNome());
         for (String v : mapGrau.keySet()){
@@ -318,7 +335,7 @@ public class Grafo {
         }
     }
     
-    public Boolean verificarCompleto(){
+    public boolean verificarCompleto(){
         int n = vertices.size();
         int kn = (n*n - n)/2;
         
@@ -329,6 +346,9 @@ public class Grafo {
     }    
     
     public String imprimirCompleto(){
+        if (orientado) {
+            return "O grafo é orientado então essa verificação não pode ser feita";
+        }
         if (verificarCompleto() == true) {
             return "O grafo é completo";
         }
@@ -337,9 +357,7 @@ public class Grafo {
         }
         
     }
-    
-    
-    
+
     public String imprimirMatrizAdjacencia(){
         
         int r[][] = gerarMatrixAdjacencia();
