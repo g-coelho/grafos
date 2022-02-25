@@ -136,26 +136,31 @@ public class Grafo {
         return MapVertices;
     }    
     
-    public String retornarGrauVertices(){
-        HashMap<String, Integer> mapGrau = mapearVertices();        
-        StringBuilder s = new StringBuilder();
-        
-        if (orientado == false) {
-            for (Aresta a: arestas) {
-                mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
-                mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
-            }
+    public HashMap<String, Integer> retornarMapGrauVertices(){
+        HashMap<String, Integer> mapGrau = mapearVertices();               
+        for (Aresta a: arestas) {
+            mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
+            mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
+        }
+        return mapGrau;        
+    }
+    
+    public String imprimirGrauVertices(){
+        StringBuilder s = new StringBuilder();        
+        if (orientado == false) {   
+            HashMap<String, Integer> mapGrau = retornarMapGrauVertices();
+            for (String vertice: mapGrau.keySet()){
+                s.append(vertice).append(": ").append(mapGrau.get(vertice));
+                s.append("\n");
+            }        
+            return s.toString();              
         }
         else{
             return "O grafo é orientado, portanto solicite grau de emissão ou recepção.";
         }
-        
-        for (String vertice: mapGrau.keySet()){
-            s.append(vertice).append(": ").append(mapGrau.get(vertice));
-            s.append("\n");
-        }        
-        return s.toString();
     }
+    
+    
     
     public String retornarGrauEmissao(){
         HashMap<String, Integer> mapEmissao = mapearVertices();
@@ -287,40 +292,52 @@ public class Grafo {
 
     }    
     
-    public String verificarRegular(){
-        HashMap<String, Integer> mapGrau = mapearVertices();           
-        if (orientado == false) {
-            if (orientado == false) {
-                for (Aresta a: arestas) {
-                    mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
-                    mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
-                }
-            }
+    public Boolean verificarRegular(){
 
-            int grau = mapGrau.get(vertices.get(0).getNome());
-
-            for (String v : mapGrau.keySet()){
-                if (mapGrau.get(v) != grau){
-                    return "O grafo não é regular";
-                }
+        HashMap<String, Integer> mapGrau = retornarMapGrauVertices();
+        int grau = mapGrau.get(vertices.get(0).getNome());
+        for (String v : mapGrau.keySet()){
+            if (mapGrau.get(v) != grau){
+                return false;
             }
-            return "O grafo é regular";
         }
-        
-        return "O grafo é orientado então essa verificação não pode ser feita.";
-
+        return true;
     }
     
-    public String verificarCompleto(){
+    public String imprimirRegular(){
+        if (orientado == true) {
+            return "O grafo é orientado então essa verificação não pode ser feita.";            
+        }
+        
+        if (verificarRegular() == true) {
+            return "O grafo é regular.";
+        }
+        
+        else{
+            return "O grafo não é regular";
+        }
+    }
+    
+    public Boolean verificarCompleto(){
         int n = vertices.size();
         int kn = (n*n - n)/2;
         
         if (kn != arestas.size()){
-            return "O grafo não é completo";
+            return false;
+        }
+        return true;
+    }    
+    
+    public String imprimirCompleto(){
+        if (verificarCompleto() == true) {
+            return "O grafo é completo";
+        }
+        else{
+            return "O grafo não é completo.";
         }
         
-        return "O grafo é completo";
-    }    
+    }
+    
     
     
     public String imprimirMatrizAdjacencia(){
