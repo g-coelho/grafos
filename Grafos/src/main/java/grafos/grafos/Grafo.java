@@ -19,7 +19,6 @@ public class Grafo {
     private ArrayList<Aresta> arestas;
     private boolean orientado;
     private boolean valorado;
-    private boolean conexo;
     
 
     public Grafo(boolean orientado, boolean valorado) {
@@ -240,17 +239,12 @@ public class Grafo {
                 count++;
         }
         if(v == count){
-            this.conexo = true;
             return true;
         }else{
-            this.conexo = false;
             return false;
-        }          
-
-        
+        }                  
     }
-    
-    
+
     public String imprimirConexo(){
         if (verificarConexo() == true) {
             return "O grafo é conexo";
@@ -259,7 +253,6 @@ public class Grafo {
             return "O grafo é desconexo";    
         }
     }    
-
     
     public void DFS(int inicio, LinkedList<Integer> listaAdjacencia [], boolean[] visitado){
         visitado[inicio] = true;
@@ -357,6 +350,45 @@ public class Grafo {
         }
         
     }
+    
+    public int[][] gerarTransitivo (){
+        int reach [][] = gerarMatrixAdjacencia();   
+        int  i, j, k;
+        int V = vertices.size();
+        for (k = 0; k < V; k++)
+        {
+            for (i = 0; i < V; i++)
+            {
+                for (j = 0; j < V; j++)
+                {
+                    reach[i][j] = (reach[i][j]!=0) ||
+                             ((reach[i][k]!=0) && (reach[k][j]!=0))?1:0;
+                }
+            }
+        }
+        return reach;       
+    }
+    
+    public String imprimirTransitivo(){
+        
+        int t[][] = gerarTransitivo();
+        StringBuilder s = new StringBuilder();
+
+        for (Vertice i : vertices)
+        {
+            s.append(i.getNome()).append(": ");            
+            for (Vertice j : vertices) {
+                if (vertices.indexOf(i) == vertices.indexOf(j))
+                  s.append("1 ");
+                else
+                  s.append(t[vertices.indexOf(i)][vertices.indexOf(j)]).append(" ");
+            }
+            s.append("\n");
+        }
+        return s.toString();
+    }        
+    
+    
 
     public String imprimirMatrizAdjacencia(){
         

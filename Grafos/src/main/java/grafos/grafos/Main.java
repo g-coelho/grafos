@@ -10,7 +10,7 @@ package grafos.grafos;
  */
 public class Main {
     public static void main(String[] args) {
-        Grafo g = new Grafo(false, true);
+        Grafo g = new Grafo(true, true);
         g.adicionarVertice("A");
         g.adicionarVertice("B");
         g.adicionarVertice("C");
@@ -28,7 +28,7 @@ public class Main {
 //        g.adicionarAresta("E", "F", 10);         
         
         
-        System.out.println(g.imprimirConexo());
+        System.out.println(g.imprimirTransitivo());
         
 
 
