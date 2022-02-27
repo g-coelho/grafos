@@ -388,8 +388,63 @@ public class Grafo {
         return s.toString();
     }        
     
-    
+    public int [][] gerarMatrizCaminho(){
+        int g[][]= new int[vertices.size()][vertices.size()];
+        for(Aresta a: arestas){
+            Vertice o = a.getOrigem();
+            Vertice d = a.getDestino();             
+            g[vertices.indexOf(o)][vertices.indexOf(d)] = 1;            
+            if (orientado == false) {                
+                g[vertices.indexOf(d)][vertices.indexOf(o)] = 1; 
+            }
+        }        
 
+        for(Vertice k: vertices)
+        {
+            for(Vertice i: vertices)
+            {
+                for(Vertice j: vertices)
+                    g[vertices.indexOf(i)][vertices.indexOf(j)] = g[vertices.indexOf(i)][vertices.indexOf(j)] | ((g[vertices.indexOf(i)][vertices.indexOf(k)] != 0 &&
+                              g[vertices.indexOf(k)][vertices.indexOf(j)] != 0) ? 1 : 0);
+            }
+        }    
+        
+        return  g; 
+    }     
+    
+    public boolean verificarCaminho(Vertice A, Vertice B){
+        int g[][] = gerarMatrizCaminho();
+        return g[vertices.indexOf(A)][vertices.indexOf(B)] == 1;
+    };
+    
+    public String imprimirCaminho(String v1, String v2){    
+        Vertice A = verticesMap.get(v1);
+        Vertice B = verticesMap.get(v2);
+
+        if (verificarCaminho(A, B))
+            return "Há caminho entre os dois vértices.";
+        else {
+            return "Não há um caminho entre os dois vértices.";  
+        }
+    }    
+    
+    public String imprimirMatrizCaminho(){
+        int g[][] = gerarMatrizCaminho();
+        StringBuilder s = new StringBuilder();
+        int i = 0;
+        for (int[] row : g) {                    
+            s.append(vertices.get(i).getNome()).append(": ");
+            i++;
+            
+            for (int val : row) {
+                s.append(val).append(" ");                
+            }
+            s.append("\n");
+        }        
+        return s.toString();
+    }     
+    
+    
     public String imprimirMatrizAdjacencia(){
         
         int r[][] = gerarMatrixAdjacencia();
