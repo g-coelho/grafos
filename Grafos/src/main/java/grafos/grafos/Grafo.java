@@ -49,9 +49,8 @@ public class Grafo {
     }
     
     public void adicionarAresta(String origem, String destino, int valor){
-        Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino));        
+        Aresta a = new Aresta(verticesMap.get(origem), verticesMap.get(destino), valor);        
         arestas.add(a);     
-        alterarValorAresta(origem, destino, valor);
     }
     
     public void removerAresta(String origem, String destino){
@@ -69,10 +68,11 @@ public class Grafo {
         while (itrA.hasNext()){
             Aresta a = itrA.next(); 
             if (a.getOrigem().getNome().equals(origem) && a.getDestino().getNome().equals(destino)) {
+                itrA.remove();
             }
         }
-
         
+        adicionarAresta(origem, destino, valor);
     }
     
     public int [][] gerarMatrixAdjacencia(){        
@@ -97,8 +97,53 @@ public class Grafo {
                 }                
             }
         }
-        return  matrAdj;        
-    }     
+        return  matrAdj;   
+        
+//        int [][] matrAdj;
+//        matrAdj = new int[vertices.size()][vertices.size()];
+//
+//        for(Aresta a: arestas){
+//            Vertice o = a.origem;
+//            Vertice d = a.destino; 
+//            
+//            if (valorado == true){ 
+//                matrAdj[vertices.indexOf(o)][vertices.indexOf(d)] = (a.valor == 0)? 1 : a.valor;            
+//                if (orientado == false) {                
+//                    matrAdj[vertices.indexOf(d)][vertices.indexOf(o)] = (a.valor == 0)? 1 : a.valor; 
+//                }                               
+//            }           
+//            else{ 
+//                matrAdj[vertices.indexOf(o)][vertices.indexOf(d)] = 1;            
+//                if (orientado == false) {                
+//                    matrAdj[vertices.indexOf(d)][vertices.indexOf(o)] = 1; 
+//                }                
+//            }
+//        }
+//        return  matrAdj;          
+        
+        
+        
+        
+        
+    }    
+    
+    public String imprimirMatrizAdjacencia(){
+        
+        int r[][] = gerarMatrixAdjacencia();
+        StringBuilder s = new StringBuilder();
+        
+        for (Vertice v : vertices)
+        {
+          s.append(v.getNome()).append(": ");
+          
+          for (int i = 0; i < vertices.size(); i++) {                
+            s.append(r[vertices.indexOf(v)][i]).append(" ");
+          }
+          s.append("\n");                        
+        }
+        return s.toString(); 
+
+    }        
     
     public LinkedList<Integer>[] gerarListaAdjacencia(){
         
@@ -120,7 +165,24 @@ public class Grafo {
 
         }        
         return adjList;        
-    }        
+    }      
+    
+    public String imprimirListAdjacencia(){        
+        LinkedList<Integer> list [] = gerarListaAdjacencia();
+        StringBuilder s = new StringBuilder();        
+        
+        for (int i = 0; i < vertices.size() ; i++) {
+            if(list[i].size()>0) {                
+                s.append(vertices.get(i).getNome()).append(": ");                
+                for (int j = 0; j < list[i].size(); j++) {
+                    s.append(vertices.get(list[i].get(j)).getNome()).append(" ");
+                }
+                s.append("\n");
+            }
+        }        
+        
+        return s.toString();
+    }    
     
     public int retornarOrdemGrafo(){      
         return vertices.size();
@@ -157,8 +219,7 @@ public class Grafo {
             return "O grafo é orientado, portanto solicite grau de emissão ou recepção.";
         }
     }
-        
-    
+            
     public String imprimriGrauEmissao(){
         HashMap<String, Integer> mapEmissao = mapearVertices();
         StringBuilder s = new StringBuilder();     
@@ -444,25 +505,54 @@ public class Grafo {
         return s.toString();
     }     
     
-    
-    public String imprimirMatrizAdjacencia(){
+    public int[] gerarDijkstra(){
         
-        int r[][] = gerarMatrixAdjacencia();
-        StringBuilder s = new StringBuilder();
-        
-        for (Vertice v : vertices)
-        {
-          s.append(v.getNome()).append(": ");
-          
-          for (int i = 0; i < vertices.size(); i++) {                
-            s.append(r[vertices.indexOf(v)][i]).append(" ");
-          }
-          s.append("\n");                        
+        int V = vertices.size();
+        int grafo[][]= gerarMatrixAdjacencia();  
+        int src = 0;        
+        int dist[] = new int[V]; 
+        boolean sptSet[] = new boolean[V];
+        for (int i = 0; i < V; i++) {
+            dist[i] = Integer.MAX_VALUE;
+            sptSet[i] = false;
         }
-        return s.toString(); 
 
+
+        dist[src] = 0;
+        for (int count = 0; count < V - 1; count++) {
+            int u = encontrarMenorDistancia(dist, sptSet);
+            sptSet[u] = true;
+            for (int v = 0; v < V; v++)
+                if (!sptSet[v] && grafo[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + grafo[u][v] < dist[v])
+                    dist[v] = dist[u] + grafo[u][v];
+        }
+        return dist;        
+    }     
+    
+    int encontrarMenorDistancia(int dist[], boolean sptSet[]){
+        int V = vertices.size();        
+        int min = Integer.MAX_VALUE, min_index = -1;
+        for (int v = 0; v < V; v++)
+            if (sptSet[v] == false && dist[v] <= min) {
+                min = dist[v];
+                min_index = v;
+            }
+        return min_index;
     }        
     
+    public String imprimirDijkstra()    {
+        int dist[] = gerarDijkstra();         
+        StringBuilder s = new StringBuilder();
+        int V = vertices.size();
+        s.append("Vértice | Distância do vértice fonte");
+        s.append("\n");
+        for (int i = 0; i < V; i++){
+            s.append(vertices.get(i).getNome()).append(": \t\t").append(dist[i]);
+            s.append("\n");
+        }        
+        return  s.toString();
+    }      
+
     public String imprimirMatrizIncidencia(){
         int[][] matrizInc = new int[vertices.size()][arestas.size()];
         StringBuilder s = new StringBuilder();
@@ -488,24 +578,10 @@ public class Grafo {
             s.append("\n");
         }        
         return s.toString(); 
-    }    
+    }       
+   
 
-    public String imprimirListAdjacencia(){        
-        LinkedList<Integer> list [] = gerarListaAdjacencia();
-        StringBuilder s = new StringBuilder();        
-        
-        for (int i = 0; i < vertices.size() ; i++) {
-            if(list[i].size()>0) {                
-                s.append(vertices.get(i).getNome()).append(": ");                
-                for (int j = 0; j < list[i].size(); j++) {
-                    s.append(vertices.get(list[i].get(j)).getNome()).append(" ");
-                }
-                s.append("\n");
-            }
-        }        
-        
-        return s.toString();
-    }
+
     
     
     

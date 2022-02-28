@@ -13,9 +13,10 @@ public class Aresta {
     private Vertice destino;
     private int valor;
 
-    public Aresta(Vertice origem, Vertice destino) {
+    public Aresta(Vertice origem, Vertice destino, int valor) {
         this.origem = origem;
         this.destino = destino;
+        this.valor = valor;
     }
     
     public Vertice getOrigem() {
