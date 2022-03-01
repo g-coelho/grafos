@@ -97,33 +97,7 @@ public class Grafo {
                 }                
             }
         }
-        return  matrAdj;   
-        
-//        int [][] matrAdj;
-//        matrAdj = new int[vertices.size()][vertices.size()];
-//
-//        for(Aresta a: arestas){
-//            Vertice o = a.origem;
-//            Vertice d = a.destino; 
-//            
-//            if (valorado == true){ 
-//                matrAdj[vertices.indexOf(o)][vertices.indexOf(d)] = (a.valor == 0)? 1 : a.valor;            
-//                if (orientado == false) {                
-//                    matrAdj[vertices.indexOf(d)][vertices.indexOf(o)] = (a.valor == 0)? 1 : a.valor; 
-//                }                               
-//            }           
-//            else{ 
-//                matrAdj[vertices.indexOf(o)][vertices.indexOf(d)] = 1;            
-//                if (orientado == false) {                
-//                    matrAdj[vertices.indexOf(d)][vertices.indexOf(o)] = 1; 
-//                }                
-//            }
-//        }
-//        return  matrAdj;          
-        
-        
-        
-        
+        return  matrAdj;    
         
     }    
     
@@ -579,6 +553,70 @@ public class Grafo {
         }        
         return s.toString(); 
     }       
+    
+    public int [] gerarPrimAGM(){                
+        int V = vertices.size();
+        int[][] grafo = gerarMatrixAdjacencia();
+        int parent[] = new int[V];
+        int key[] = new int[V];
+ 
+        boolean mstSet[] = new boolean[V];
+ 
+        for (int i = 0; i < V; i++) {
+            key[i] = Integer.MAX_VALUE;
+            mstSet[i] = false;
+        }
+
+        key[0] = 0; 
+        parent[0] = -1;
+ 
+        for (int count = 0; count < V - 1; count++) {
+            int u = encontrarMenorDistancia(key, mstSet);
+            mstSet[u] = true;
+            for (int v = 0; v < V; v++)
+                if (grafo[u][v] != 0 && mstSet[v] == false && grafo[u][v] < key[v]) {
+                    parent[v] = u;
+                    key[v] = grafo[u][v];
+                }
+        }        
+        return parent;    
+    }    
+    
+    public String imprimirPrimAGM(){
+        int V = vertices.size();   
+        int [][] grafo = gerarMatrixAdjacencia();
+        int [] parent = gerarPrimAGM();
+        StringBuilder s = new StringBuilder();        
+        
+        if(verificarConexo() == false){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo é desconexo.";
+        }
+        
+        if(orientado == true){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo é orientado."; 
+        }
+        
+        if(verificarLaço() == true){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo possui um laço.";
+        }        
+        
+        s.append("Aresta \t| Peso");
+        s.append("\n");
+
+        for (int i = 1; i < V; i++){
+            String o = vertices.get(parent[i]).getNome();
+            String d = vertices.get(i).getNome();
+            
+            
+            s.append(o).append(" - ").append(d).append("\t  ").append(grafo[i][parent[i]]);
+            s.append("\n");
+        }                    
+        
+        
+        
+        return s.toString();
+        
+    }        
    
 
 
