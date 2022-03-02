@@ -5,6 +5,7 @@
 package grafos.grafos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -554,9 +555,13 @@ public class Grafo {
         return s.toString(); 
     }       
     
-    public int [] gerarPrimAGM(){                
+    public int [] gerarPrim(){                
         int V = vertices.size();
         int[][] grafo = gerarMatrixAdjacencia();
+        int [][] matrAdjPrim = new int[vertices.size()][vertices.size()];   
+        StringBuilder s = new StringBuilder();
+        
+        
         int parent[] = new int[V];
         int key[] = new int[V];
  
@@ -578,14 +583,28 @@ public class Grafo {
                     parent[v] = u;
                     key[v] = grafo[u][v];
                 }
-        }        
-        return parent;    
+        }
+        return parent;   
     }    
-    
-    public String imprimirPrimAGM(){
+
+    public int [][] gerarPrimMatrizAdj(){        
+        int [] parent = gerarPrim();
+        int[][] grafo = gerarMatrixAdjacencia();
+        int [][] matrAdjPrim = new int [vertices.size()][vertices.size()];
+        
+        for(int i = 1; i < vertices.size(); i++){
+            matrAdjPrim[vertices.indexOf(vertices.get(parent[i]))][vertices.indexOf(vertices.get(i))] = grafo[i][parent[i]];
+            matrAdjPrim[vertices.indexOf(vertices.get(i))][vertices.indexOf(vertices.get(parent[i]))] = grafo[i][parent[i]];         
+
+        }        
+        
+        return  matrAdjPrim;
+    };
+
+    public String imprimirPrim(){
         int V = vertices.size();   
         int [][] grafo = gerarMatrixAdjacencia();
-        int [] parent = gerarPrimAGM();
+        int [] parent = gerarPrim();
         StringBuilder s = new StringBuilder();        
         
         if(verificarConexo() == false){
@@ -611,15 +630,45 @@ public class Grafo {
             s.append(o).append(" - ").append(d).append("\t  ").append(grafo[i][parent[i]]);
             s.append("\n");
         }                    
-        
-        
-        
+
         return s.toString();
         
-    }        
+    } 
+    
+    public String imprimirPrimMatrizAdj(){
+
+        int r[][] = gerarPrimMatrizAdj();
+        StringBuilder s = new StringBuilder();
+        
+        if(verificarConexo() == false){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo é desconexo.";
+        }
+        
+        if(orientado == true){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo é orientado."; 
+        }
+        
+        if(verificarLaço() == true){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo possui um laço.";
+        }                
+        
+        for (Vertice v : vertices)
+        {
+          s.append(v.getNome()).append(": ");
+          
+          for (int i = 0; i < vertices.size(); i++) {                
+            s.append(r[vertices.indexOf(v)][i]).append(" ");
+          }
+          s.append("\n");                        
+        }
+        return s.toString(); 
+        
+    }
    
+   
+ 
 
-
+   
     
     
     

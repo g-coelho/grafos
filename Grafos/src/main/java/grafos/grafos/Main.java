@@ -29,13 +29,8 @@ public class Main {
         g.adicionarAresta("C", "E", 1);  
         g.adicionarAresta("D", "E", 1); 
 
-         
-        //System.out.println(g.imprimirConexo()); Necessário para o Circuito de Euler
-        
-        System.out.println(g.imprimirMatrizAdjacencia());
-
-        System.out.println(g.imprimirPrimAGM());
-        
+        System.out.println(g.imprimirPrim());
+        System.out.println(g.imprimirPrimMatrizAdj());
 
 
 
