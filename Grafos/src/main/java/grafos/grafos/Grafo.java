@@ -194,7 +194,7 @@ public class Grafo {
             return "O grafo é orientado, portanto solicite grau de emissão ou recepção.";
         }
     }
-            
+                
     public String imprimriGrauEmissao(){
         HashMap<String, Integer> mapEmissao = mapearVertices();
         StringBuilder s = new StringBuilder();     
@@ -595,9 +595,7 @@ public class Grafo {
         for(int i = 1; i < vertices.size(); i++){
             matrAdjPrim[vertices.indexOf(vertices.get(parent[i]))][vertices.indexOf(vertices.get(i))] = grafo[i][parent[i]];
             matrAdjPrim[vertices.indexOf(vertices.get(i))][vertices.indexOf(vertices.get(parent[i]))] = grafo[i][parent[i]];         
-
-        }        
-        
+        }                
         return  matrAdjPrim;
     };
 
@@ -665,7 +663,20 @@ public class Grafo {
         
     }
    
-   
+   public void acoplarArestasPesoMinimo(){
+       int [][] grafoPrim = gerarPrimMatrizAdj();
+       int [] grauVertices = new int [vertices.size()];
+       
+       for (int i = 0; i < grafoPrim.length; i++) {
+           for (int j = 0; j < grafoPrim[i].length; j++) {
+               grauVertices[i] = grauVertices[i] + grafoPrim[i][j];
+           }
+       }
+       
+       System.out.println(Arrays.toString(grauVertices));
+       
+       
+   }
  
 
    

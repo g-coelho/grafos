@@ -28,9 +28,9 @@ public class Main {
         g.adicionarAresta("C", "D", 1); 
         g.adicionarAresta("C", "E", 1);  
         g.adicionarAresta("D", "E", 1); 
-
+        
         System.out.println(g.imprimirPrim());
-        System.out.println(g.imprimirPrimMatrizAdj());
+        g.acoplarArestasPesoMinimo();
 
 
 
