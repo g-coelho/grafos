@@ -36,7 +36,23 @@ public class GrafoOrientado extends Grafo {
         
     }      
     
+    @Override
+    public LinkedList<Integer>[] gerarListaAdjacencia(){
+        
+        LinkedList<Integer> adjList [];
+        adjList = new LinkedList[getVertices().size()];        
+        for (int i = 0; i < getVertices().size(); i++) {
+                adjList[i] = new LinkedList<>();
+            }
+                
+        for (Aresta a : getArestas()){            
+            if(adjList[getVertices().indexOf(a.getOrigem())].contains(getVertices().indexOf(a.getDestino())) == false)
+                adjList[getVertices().indexOf(a.getOrigem())].addFirst(getVertices().indexOf(a.getDestino()));            
+            
 
+        }        
+        return adjList;        
+    }      
 
     
     

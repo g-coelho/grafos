@@ -29,7 +29,7 @@ public class Main {
         g.adicionarAresta("C", "E", 1);  
         g.adicionarAresta("D", "E", 1); 
         
-        System.out.println(g.imprimirMatrizAdjacencia());
+        System.out.println(g.imprimirListAdjacencia());
         
         
         Grafo h = new GrafoNaoOrientado(true);
@@ -51,7 +51,7 @@ public class Main {
         h.adicionarAresta("C", "E", 1);  
         h.adicionarAresta("D", "E", 1); 
 
-        System.out.println(h.imprimirMatrizAdjacencia());
+        System.out.println(h.imprimirListAdjacencia());
 
 
 

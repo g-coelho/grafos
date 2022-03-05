@@ -94,44 +94,24 @@ public abstract class Grafo {
 
     }        
     
-//    public LinkedList<Integer>[] gerarListaAdjacencia(){
-//        
-//        LinkedList<Integer> adjList [];
-//        adjList = new LinkedList[vertices.size()];        
-//        for (int i = 0; i < vertices.size(); i++) {
-//                adjList[i] = new LinkedList<>();
-//            }
-//                
-//        for (Aresta a : arestas){            
-//            if(adjList[vertices.indexOf(a.getOrigem())].contains(vertices.indexOf(a.getDestino())) == false)
-//                adjList[vertices.indexOf(a.getOrigem())].addFirst(vertices.indexOf(a.getDestino()));            
-//            
-//            if (orientado == false){
-//                if (adjList[vertices.indexOf(a.getDestino())].contains(vertices.indexOf(a.getOrigem())) == false)
-//                    adjList[vertices.indexOf(a.getDestino())].addFirst(vertices.indexOf(a.getOrigem()));  
-//                    
-//            }
-//
-//        }        
-//        return adjList;        
-//    }      
-//    
-//    public String imprimirListAdjacencia(){        
-//        LinkedList<Integer> list [] = gerarListaAdjacencia();
-//        StringBuilder s = new StringBuilder();        
-//        
-//        for (int i = 0; i < vertices.size() ; i++) {
-//            if(list[i].size()>0) {                
-//                s.append(vertices.get(i).getNome()).append(": ");                
-//                for (int j = 0; j < list[i].size(); j++) {
-//                    s.append(vertices.get(list[i].get(j)).getNome()).append(" ");
-//                }
-//                s.append("\n");
-//            }
-//        }        
-//        
-//        return s.toString();
-//    }    
+    public abstract LinkedList<Integer>[] gerarListaAdjacencia();
+    
+    public String imprimirListAdjacencia(){        
+        LinkedList<Integer> list [] = gerarListaAdjacencia();
+        StringBuilder s = new StringBuilder();        
+        
+        for (int i = 0; i < vertices.size() ; i++) {
+            if(list[i].size()>0) {                
+                s.append(vertices.get(i).getNome()).append(": ");                
+                for (int j = 0; j < list[i].size(); j++) {
+                    s.append(vertices.get(list[i].get(j)).getNome()).append(" ");
+                }
+                s.append("\n");
+            }
+        }        
+        
+        return s.toString();
+    }    
 //    
 //    public int retornarOrdemGrafo(){      
 //        return vertices.size();

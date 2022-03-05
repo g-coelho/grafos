@@ -4,6 +4,8 @@
  */
 package grafos.grafos;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author gabri
@@ -38,6 +40,30 @@ public class GrafoNaoOrientado extends Grafo {
         return  matrAdj;    
         
     }        
+    
+    @Override
+    public LinkedList<Integer>[] gerarListaAdjacencia(){
+        
+        LinkedList<Integer> adjList [];
+        adjList = new LinkedList[getVertices().size()];        
+        for (int i = 0; i < getVertices().size(); i++) {
+                adjList[i] = new LinkedList<>();
+            }
+                
+        for (Aresta a : getArestas()){            
+            if(adjList[getVertices().indexOf(a.getOrigem())].contains(getVertices().indexOf(a.getDestino())) == false){
+                adjList[getVertices().indexOf(a.getOrigem())].addFirst(getVertices().indexOf(a.getDestino()));  
+            }
+        
+            if (adjList[getVertices().indexOf(a.getDestino())].contains(getVertices().indexOf(a.getOrigem())) == false){
+                adjList[getVertices().indexOf(a.getDestino())].addFirst(getVertices().indexOf(a.getOrigem()));  
+            }
+                    
+            
+
+        }        
+        return adjList;        
+    }          
     
     
 }
