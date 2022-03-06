@@ -80,8 +80,6 @@ public class GrafoNaoOrientado extends Grafo {
     
     public String imprimirSimples(){                
         ArrayList<String> parAresta = new ArrayList<>();
-        
-
         if (verificarLaço() == true) {
             return "O grafo não é simples pois possui laço.";
         }
@@ -134,5 +132,30 @@ public class GrafoNaoOrientado extends Grafo {
             return "O grafo não é completo.";
         }        
     }    
+    
+    @Override
+    public int [][] gerarMatrizCaminho(){
+        int g[][]= new int[getVertices().size()][getVertices().size()];
+        for(Aresta a: getArestas()){
+            Vertice o = a.getOrigem();
+            Vertice d = a.getDestino();             
+            g[getVertices().indexOf(o)][getVertices().indexOf(d)] = 1;           
+               
+            g[getVertices().indexOf(d)][getVertices().indexOf(o)] = 1; 
+            
+        }        
+
+        for(Vertice k: getVertices())
+        {
+            for(Vertice i: getVertices())
+            {
+                for(Vertice j: getVertices())
+                    g[getVertices().indexOf(i)][getVertices().indexOf(j)] = g[getVertices().indexOf(i)][getVertices().indexOf(j)] | ((g[getVertices().indexOf(i)][getVertices().indexOf(k)] != 0 &&
+                              g[getVertices().indexOf(k)][getVertices().indexOf(j)] != 0) ? 1 : 0);
+            }
+        }    
+        
+        return  g; 
+    }         
     
 }

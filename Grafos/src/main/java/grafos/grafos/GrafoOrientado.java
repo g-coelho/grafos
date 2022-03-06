@@ -121,7 +121,28 @@ public class GrafoOrientado extends Grafo {
         }
         return s.toString();         
 
-    }        
+    }   
+    
+    public int [][] gerarMatrizCaminho(){
+        int g[][]= new int[getVertices().size()][getVertices().size()];
+        for(Aresta a: getArestas()){
+            Vertice o = a.getOrigem();
+            Vertice d = a.getDestino();             
+            g[getVertices().indexOf(o)][getVertices().indexOf(d)] = 1;            
+        }        
+
+        for(Vertice k: getVertices())
+        {
+            for(Vertice i: getVertices())
+            {
+                for(Vertice j: getVertices())
+                    g[getVertices().indexOf(i)][getVertices().indexOf(j)] = g[getVertices().indexOf(i)][getVertices().indexOf(j)] | ((g[getVertices().indexOf(i)][getVertices().indexOf(k)] != 0 &&
+                              g[getVertices().indexOf(k)][getVertices().indexOf(j)] != 0) ? 1 : 0);
+            }
+        }    
+        
+        return  g; 
+    }         
     
     
 }

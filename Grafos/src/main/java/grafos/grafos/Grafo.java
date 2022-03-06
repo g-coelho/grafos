@@ -181,73 +181,45 @@ public abstract class Grafo {
             }        
         }    
     }        
-    
 
+    public int[][] gerarTransitivo (){
+        int reach [][] = gerarMatrixAdjacencia();   
+        int  i, j, k;
+        int V = vertices.size();
+        for (k = 0; k < V; k++)
+        {
+            for (i = 0; i < V; i++)
+            {
+                for (j = 0; j < V; j++)
+                {
+                    reach[i][j] = (reach[i][j]!=0) ||
+                             ((reach[i][k]!=0) && (reach[k][j]!=0))?1:0;
+                }
+            }
+        }
+        return reach;       
+    }
     
+    public String imprimirTransitivo(){
+        
+        int t[][] = gerarTransitivo();
+        StringBuilder s = new StringBuilder();
 
+        for (Vertice i : vertices)
+        {
+            s.append(i.getNome()).append(": ");            
+            for (Vertice j : vertices) {
+                if (vertices.indexOf(i) == vertices.indexOf(j))
+                  s.append("1 ");
+                else
+                  s.append(t[vertices.indexOf(i)][vertices.indexOf(j)]).append(" ");
+            }
+            s.append("\n");
+        }
+        return s.toString();
+    }        
     
-
-//    
-//    public int[][] gerarTransitivo (){
-//        int reach [][] = gerarMatrixAdjacencia();   
-//        int  i, j, k;
-//        int V = vertices.size();
-//        for (k = 0; k < V; k++)
-//        {
-//            for (i = 0; i < V; i++)
-//            {
-//                for (j = 0; j < V; j++)
-//                {
-//                    reach[i][j] = (reach[i][j]!=0) ||
-//                             ((reach[i][k]!=0) && (reach[k][j]!=0))?1:0;
-//                }
-//            }
-//        }
-//        return reach;       
-//    }
-//    
-//    public String imprimirTransitivo(){
-//        
-//        int t[][] = gerarTransitivo();
-//        StringBuilder s = new StringBuilder();
-//
-//        for (Vertice i : vertices)
-//        {
-//            s.append(i.getNome()).append(": ");            
-//            for (Vertice j : vertices) {
-//                if (vertices.indexOf(i) == vertices.indexOf(j))
-//                  s.append("1 ");
-//                else
-//                  s.append(t[vertices.indexOf(i)][vertices.indexOf(j)]).append(" ");
-//            }
-//            s.append("\n");
-//        }
-//        return s.toString();
-//    }        
-//    
-//    public int [][] gerarMatrizCaminho(){
-//        int g[][]= new int[vertices.size()][vertices.size()];
-//        for(Aresta a: arestas){
-//            Vertice o = a.getOrigem();
-//            Vertice d = a.getDestino();             
-//            g[vertices.indexOf(o)][vertices.indexOf(d)] = 1;            
-//            if (orientado == false) {                
-//                g[vertices.indexOf(d)][vertices.indexOf(o)] = 1; 
-//            }
-//        }        
-//
-//        for(Vertice k: vertices)
-//        {
-//            for(Vertice i: vertices)
-//            {
-//                for(Vertice j: vertices)
-//                    g[vertices.indexOf(i)][vertices.indexOf(j)] = g[vertices.indexOf(i)][vertices.indexOf(j)] | ((g[vertices.indexOf(i)][vertices.indexOf(k)] != 0 &&
-//                              g[vertices.indexOf(k)][vertices.indexOf(j)] != 0) ? 1 : 0);
-//            }
-//        }    
-//        
-//        return  g; 
-//    }     
+    public abstract int [][] gerarMatrizCaminho();
 //    
 //    public boolean verificarCaminho(Vertice A, Vertice B){
 //        int g[][] = gerarMatrizCaminho();
