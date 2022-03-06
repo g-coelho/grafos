@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package grafos.grafos;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -54,6 +56,72 @@ public class GrafoOrientado extends Grafo {
         return adjList;        
     }      
 
+    public String imprimriGrauEmissao(){
+        HashMap<String, Integer> mapEmissao = mapearVertices();
+        StringBuilder s = new StringBuilder();     
+        for (Aresta a: getArestas()){
+            mapEmissao.replace(a.getOrigem().getNome(), mapEmissao.get(a.getOrigem().getNome())+1);
+        }       
+        
+        for (String vertice: mapEmissao.keySet()){
+            s.append(vertice).append(": ").append(mapEmissao.get(vertice));
+            s.append("\n");
+        }        
+        return s.toString();
+    }
+        
+    public String imprimirrGrauRecepcao(){
+        HashMap<String, Integer> mapRecepcao = mapearVertices();
+        StringBuilder s = new StringBuilder();     
+        for (Aresta a: getArestas()){
+            mapRecepcao.replace(a.getDestino().getNome(), mapRecepcao.get(a.getDestino().getNome())+1);
+        }       
+
+        for (String vertice: mapRecepcao.keySet()){
+            s.append(vertice).append(": ").append(mapRecepcao.get(vertice));
+            s.append("\n");
+        }        
+        return s.toString();
+    }        
+    
+    public String imprimirFonte() {
+        ArrayList<String> verticesDestino = new ArrayList<String>();
+        StringBuilder s = new StringBuilder();
+        
+        s.append("São fonte os seguintes vértices: ");
+      
+        for(Aresta a: getArestas()){
+            verticesDestino.add(a.getDestino().getNome());
+        }
+        
+        for(Vertice v: getVertices()){
+            if(verticesDestino.contains(v.getNome())== false){                
+                s.append(v.getNome());
+                s.append(", ");
+            }
+        }
+        return s.toString();        
+    }
+
+    public String imprimirSumidouro() {
+        ArrayList<String> verticesOrigem = new ArrayList<String>();
+        StringBuilder s = new StringBuilder();
+        
+        s.append("São sumidouro os seguintes vértices: ");
+      
+        for(Aresta a: getArestas()){
+            verticesOrigem.add(a.getOrigem().getNome());
+        }
+        
+        for(Vertice v: getVertices()){
+            if(verticesOrigem.contains(v.getNome())== false){                
+                s.append(v.getNome());
+                s.append(", ");
+            }
+        }
+        return s.toString();         
+
+    }        
     
     
 }

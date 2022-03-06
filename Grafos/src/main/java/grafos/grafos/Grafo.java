@@ -112,234 +112,81 @@ public abstract class Grafo {
         
         return s.toString();
     }    
-//    
-//    public int retornarOrdemGrafo(){      
-//        return vertices.size();
-//    }
-//    
-//    public HashMap<String, Integer> mapearVertices(){
-//        HashMap<String, Integer> MapVertices = new HashMap<>();        
-//        for (Vertice v: vertices) {
-//            MapVertices.put(v.getNome(), 0);                
-//        }
-//        return MapVertices;
-//    }    
-//    
-//    public HashMap<String, Integer> retornarMapGrauVertices(){
-//        HashMap<String, Integer> mapGrau = mapearVertices();               
-//        for (Aresta a: arestas) {
-//            mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
-//            mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
-//        }
-//        return mapGrau;        
-//    }
-//    
-//    public String imprimirGrauVertices(){
-//        StringBuilder s = new StringBuilder();        
-//        if (orientado == false) {   
-//            HashMap<String, Integer> mapGrau = retornarMapGrauVertices();
-//            for (String vertice: mapGrau.keySet()){
-//                s.append(vertice).append(": ").append(mapGrau.get(vertice));
-//                s.append("\n");
-//            }        
-//            return s.toString();              
-//        }
-//        else{
-//            return "O grafo é orientado, portanto solicite grau de emissão ou recepção.";
-//        }
-//    }
-//                
-//    public String imprimriGrauEmissao(){
-//        HashMap<String, Integer> mapEmissao = mapearVertices();
-//        StringBuilder s = new StringBuilder();     
-//        
-//        if (orientado == true) {
-//            for (Aresta a: arestas){
-//                mapEmissao.replace(a.getOrigem().getNome(), mapEmissao.get(a.getOrigem().getNome())+1);
-//            }       
-//        }
-//        
-//        else{
-//            return "O grafo não é orientado, portanto solicite apenas o grau dos vértices.";
-//        }
-//        for (String vertice: mapEmissao.keySet()){
-//            s.append(vertice + ": " + mapEmissao.get(vertice));
-//            s.append("\n");
-//        }        
-//        return s.toString();
-//    }
-//    
-//    public String imprimirrGrauRecepcao(){
-//        HashMap<String, Integer> mapRecepcao = mapearVertices();
-//        StringBuilder s = new StringBuilder();     
-//        
-//        if (orientado == true) {
-//            for (Aresta a: arestas){
-//                mapRecepcao.replace(a.getDestino().getNome(), mapRecepcao.get(a.getDestino().getNome())+1);
-//            }       
-//        }
-//        
-//        else{
-//            return "O grafo não é orientado, portanto solicite apenas o grau dos vértices.";
-//        }
-//        for (String vertice: mapRecepcao.keySet()){
-//            s.append(vertice + ": " + mapRecepcao.get(vertice));
-//            s.append("\n");
-//        }        
-//        return s.toString();
-//    }    
-//
-//    public String imprimirSimples(){                
-//        ArrayList<String> parAresta = new ArrayList<>();
-//        
-//
-//        if (verificarLaço() == true) {
-//            return "O grafo não é simples pois possui laço.";
-//        }
-//    
-//        for (Aresta a : arestas) {            
-//            if (parAresta.contains(a.getOrigem().getNome() + a.getDestino().getNome()) || parAresta.contains(a.getDestino().getNome() + a.getOrigem().getNome())) {
-//                return "O grafo não é simples pois possui arestas múltiplas";
-//            }            
-//            parAresta.add(a.getOrigem().getNome() + a.getDestino().getNome());
-//        }
-//        return "O grafo é simples.";      
-//    }
-//    
-//    public boolean verificarLaço(){
-//        for (Aresta a : arestas){
-//            if (a.getDestino() == a.getOrigem()) {
-//                return true;
-//            } 
-//        }
-//        return false;
-//    }
-//    
-//    public boolean verificarConexo(){
-//        int v = vertices.size();
-//        LinkedList<Integer> listaAdjacencia [] = gerarListaAdjacencia(); 
-//        
-//        boolean[] visitado = new boolean[v];
-//        
-//        DFS(0, listaAdjacencia, visitado);
-//        
-//        int count = 0;
-//        for (int i = 0; i < visitado.length ; i++) {
-//            if(visitado[i])
-//                count++;
-//        }
-//        if(v == count){
-//            return true;
-//        }else{
-//            return false;
-//        }                  
-//    }
-//
-//    public String imprimirConexo(){
-//        if (verificarConexo() == true) {
-//            return "O grafo é conexo";
-//        }
-//        else{
-//            return "O grafo é desconexo";    
-//        }
-//    }    
-//    
-//    public void DFS(int inicio, LinkedList<Integer> listaAdjacencia [], boolean[] visitado){
-//        visitado[inicio] = true;
-//        for (int i = 0; i < listaAdjacencia[inicio].size() ; i++) {
-//            int vizinho = listaAdjacencia[inicio].get(i);
-//            if(visitado[vizinho] == false){
-//                DFS(vizinho, listaAdjacencia, visitado);
-//            }        
-//        }    
-//    }        
-//    
-//    public String imprimirFonte() {
-//        ArrayList<String> verticesDestino = new ArrayList<String>();
-//        StringBuilder s = new StringBuilder();
-//        
-//        s.append("São fonte os seguintes vértices: ");
-//      
-//        for(Aresta a: arestas){
-//            verticesDestino.add(a.getDestino().getNome());
-//        }
-//        
-//        for(Vertice v: vertices){
-//            if(verticesDestino.contains(v.getNome())== false){                
-//                s.append(v.getNome());
-//                s.append(", ");
-//            }
-//        }
-//        return s.toString();        
-//    }
-//
-//    public String imprimirSumidouro() {
-//        ArrayList<String> verticesOrigem = new ArrayList<String>();
-//        StringBuilder s = new StringBuilder();
-//        
-//        s.append("São sumidouro os seguintes vértices: ");
-//      
-//        for(Aresta a: arestas){
-//            verticesOrigem.add(a.getOrigem().getNome());
-//        }
-//        
-//        for(Vertice v: vertices){
-//            if(verticesOrigem.contains(v.getNome())== false){                
-//                s.append(v.getNome());
-//                s.append(", ");
-//            }
-//        }
-//        return s.toString();         
-//
-//    }    
-//    
-//    public boolean verificarRegular(){
-//        HashMap<String, Integer> mapGrau = retornarMapGrauVertices();
-//        int grau = mapGrau.get(vertices.get(0).getNome());
-//        for (String v : mapGrau.keySet()){
-//            if (mapGrau.get(v) != grau){
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//    
-//    public String imprimirRegular(){
-//        if (orientado == true) {
-//            return "O grafo é orientado então essa verificação não pode ser feita.";            
-//        }
-//        
-//        if (verificarRegular() == true) {
-//            return "O grafo é regular.";
-//        }
-//        
-//        else{
-//            return "O grafo não é regular";
-//        }
-//    }
-//    
-//    public boolean verificarCompleto(){
-//        int n = vertices.size();
-//        int kn = (n*n - n)/2;
-//        
-//        if (kn != arestas.size()){
-//            return false;
-//        }
-//        return true;
-//    }    
-//    
-//    public String imprimirCompleto(){
-//        if (orientado) {
-//            return "O grafo é orientado então essa verificação não pode ser feita";
-//        }
-//        if (verificarCompleto() == true) {
-//            return "O grafo é completo";
-//        }
-//        else{
-//            return "O grafo não é completo.";
-//        }
-//        
-//    }
+    
+    public int retornarOrdemGrafo(){      
+        return vertices.size();
+    }
+    
+    public HashMap<String, Integer> mapearVertices(){
+        HashMap<String, Integer> MapVertices = new HashMap<>();        
+        for (Vertice v: vertices) {
+            MapVertices.put(v.getNome(), 0);                
+        }
+        return MapVertices;
+    }    
+    
+    public HashMap<String, Integer> retornarMapGrauVertices(){
+        HashMap<String, Integer> mapGrau = mapearVertices();               
+        for (Aresta a: arestas) {
+            mapGrau.replace(a.getOrigem().getNome(), mapGrau.get(a.getOrigem().getNome())+1);
+            mapGrau.replace(a.getDestino().getNome(), mapGrau.get(a.getDestino().getNome())+1);
+        }
+        return mapGrau;        
+    }
+    
+    public boolean verificarLaço(){
+        for (Aresta a : arestas){
+            if (a.getDestino() == a.getOrigem()) {
+                return true;
+            } 
+        }
+        return false;
+    }    
+    
+    public boolean verificarConexo(){
+        int v = vertices.size();
+        LinkedList<Integer> listaAdjacencia [] = gerarListaAdjacencia(); 
+        
+        boolean[] visitado = new boolean[v];
+        
+        DFS(0, listaAdjacencia, visitado);
+        
+        int count = 0;
+        for (int i = 0; i < visitado.length ; i++) {
+            if(visitado[i])
+                count++;
+        }
+        if(v == count){
+            return true;
+        }else{
+            return false;
+        }                  
+    }
+
+    public String imprimirConexo(){
+        if (verificarConexo() == true) {
+            return "O grafo é conexo";
+        }
+        else{
+            return "O grafo é desconexo";    
+        }
+    }    
+    
+    public void DFS(int inicio, LinkedList<Integer> listaAdjacencia [], boolean[] visitado){
+        visitado[inicio] = true;
+        for (int i = 0; i < listaAdjacencia[inicio].size() ; i++) {
+            int vizinho = listaAdjacencia[inicio].get(i);
+            if(visitado[vizinho] == false){
+                DFS(vizinho, listaAdjacencia, visitado);
+            }        
+        }    
+    }        
+    
+
+    
+
+    
+
 //    
 //    public int[][] gerarTransitivo (){
 //        int reach [][] = gerarMatrixAdjacencia();   
