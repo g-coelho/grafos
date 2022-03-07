@@ -5,6 +5,7 @@
 package grafos.grafos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -157,5 +158,123 @@ public class GrafoNaoOrientado extends Grafo {
         
         return  g; 
     }         
+    
+    
+    public int [] gerarPrim(){                
+        int V = getVertices().size();
+        int[][] grafo = gerarMatrixAdjacencia();
+        int [][] matrAdjPrim = new int[getVertices().size()][getVertices().size()];   
+        StringBuilder s = new StringBuilder();
+        
+        
+        int parent[] = new int[V];
+        int key[] = new int[V];
+ 
+        boolean mstSet[] = new boolean[V];
+ 
+        for (int i = 0; i < V; i++) {
+            key[i] = Integer.MAX_VALUE;
+            mstSet[i] = false;
+        }
+
+        key[0] = 0; 
+        parent[0] = -1;
+ 
+        for (int count = 0; count < V - 1; count++) {
+            int u = encontrarMenorDistancia(key, mstSet);
+            mstSet[u] = true;
+            for (int v = 0; v < V; v++)
+                if (grafo[u][v] != 0 && mstSet[v] == false && grafo[u][v] < key[v]) {
+                    parent[v] = u;
+                    key[v] = grafo[u][v];
+                }
+        }
+        return parent;   
+    }        
+    
+    public String imprimirPrim(){
+        int V = getVertices().size();   
+        int [][] grafo = gerarMatrixAdjacencia();
+        int [] parent = gerarPrim();
+        StringBuilder s = new StringBuilder();        
+        
+        if(verificarConexo() == false){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo é desconexo.";
+        }
+        
+        if(verificarLaço() == true){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo possui um laço.";
+        }        
+        
+        s.append("Aresta \t| Peso");
+        s.append("\n");
+
+        for (int i = 1; i < V; i++){
+            String o = getVertices().get(parent[i]).getNome();
+            String d = getVertices().get(i).getNome();
+            
+            
+            s.append(o).append(" - ").append(d).append("\t  ").append(grafo[i][parent[i]]);
+            s.append("\n");
+        }                    
+
+        return s.toString();
+        
+    }     
+    
+    public int [][] gerarPrimMatrizAdj(){        
+        int [] parent = gerarPrim();
+        int[][] grafo = gerarMatrixAdjacencia();
+        int [][] matrAdjPrim = new int [getVertices().size()][getVertices().size()];
+        
+        for(int i = 1; i < getVertices().size(); i++){
+            matrAdjPrim[getVertices().indexOf(getVertices().get(parent[i]))][getVertices().indexOf(getVertices().get(i))] = grafo[i][parent[i]];
+            matrAdjPrim[getVertices().indexOf(getVertices().get(i))][getVertices().indexOf(getVertices().get(parent[i]))] = grafo[i][parent[i]];         
+        }                
+        return  matrAdjPrim;
+    };
+
+    public String imprimirPrimMatrizAdj(){
+
+        int r[][] = gerarPrimMatrizAdj();
+        StringBuilder s = new StringBuilder();
+        
+        if(verificarConexo() == false){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo é desconexo.";
+        }
+        
+        if(verificarLaço() == true){
+            return "Não é possível gerar a árvore geradora mínima porque o grafo possui um laço.";
+        }                
+        
+        for (Vertice v : getVertices())
+        {
+          s.append(v.getNome()).append(": ");
+          
+          for (int i = 0; i < getVertices().size(); i++) {                
+            s.append(r[getVertices().indexOf(v)][i]).append(" ");
+          }
+          s.append("\n");                        
+        }
+        return s.toString(); 
+        
+    }
+   
+   public void acoplarArestasPesoMinimo(){
+       int [][] grafoPrim = gerarPrimMatrizAdj();
+       int [] grauVertices = new int [getVertices().size()];
+       
+       for (int i = 0; i < grafoPrim.length; i++) {
+           for (int j = 0; j < grafoPrim[i].length; j++) {
+               grauVertices[i] = grauVertices[i] + grafoPrim[i][j];
+           }
+       }
+       
+       System.out.println(Arrays.toString(grauVertices));
+       
+       
+   }    
+    
+    
     
 }

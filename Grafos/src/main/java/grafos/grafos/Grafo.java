@@ -220,237 +220,114 @@ public abstract class Grafo {
     }        
     
     public abstract int [][] gerarMatrizCaminho();
-//    
-//    public boolean verificarCaminho(Vertice A, Vertice B){
-//        int g[][] = gerarMatrizCaminho();
-//        return g[vertices.indexOf(A)][vertices.indexOf(B)] == 1;
-//    };
-//    
-//    public String imprimirCaminho(String v1, String v2){    
-//        Vertice A = verticesMap.get(v1);
-//        Vertice B = verticesMap.get(v2);
-//
-//        if (verificarCaminho(A, B))
-//            return "Há caminho entre os dois vértices.";
-//        else {
-//            return "Não há um caminho entre os dois vértices.";  
-//        }
-//    }    
-//    
-//    public String imprimirMatrizCaminho(){
-//        int g[][] = gerarMatrizCaminho();
-//        StringBuilder s = new StringBuilder();
-//        int i = 0;
-//        for (int[] row : g) {                    
-//            s.append(vertices.get(i).getNome()).append(": ");
-//            i++;
-//            
-//            for (int val : row) {
-//                s.append(val).append(" ");                
-//            }
-//            s.append("\n");
-//        }        
-//        return s.toString();
-//    }     
-//    
-//    public int[] gerarDijkstra(){
-//        
-//        int V = vertices.size();
-//        int grafo[][]= gerarMatrixAdjacencia();  
-//        int src = 0;        
-//        int dist[] = new int[V]; 
-//        boolean sptSet[] = new boolean[V];
-//        for (int i = 0; i < V; i++) {
-//            dist[i] = Integer.MAX_VALUE;
-//            sptSet[i] = false;
-//        }
-//
-//
-//        dist[src] = 0;
-//        for (int count = 0; count < V - 1; count++) {
-//            int u = encontrarMenorDistancia(dist, sptSet);
-//            sptSet[u] = true;
-//            for (int v = 0; v < V; v++)
-//                if (!sptSet[v] && grafo[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + grafo[u][v] < dist[v])
-//                    dist[v] = dist[u] + grafo[u][v];
-//        }
-//        return dist;        
-//    }     
-//    
-//    int encontrarMenorDistancia(int dist[], boolean sptSet[]){
-//        int V = vertices.size();        
-//        int min = Integer.MAX_VALUE, min_index = -1;
-//        for (int v = 0; v < V; v++)
-//            if (sptSet[v] == false && dist[v] <= min) {
-//                min = dist[v];
-//                min_index = v;
-//            }
-//        return min_index;
-//    }        
-//    
-//    public String imprimirDijkstra()    {
-//        int dist[] = gerarDijkstra();         
-//        StringBuilder s = new StringBuilder();
-//        int V = vertices.size();
-//        s.append("Vértice | Distância do vértice fonte");
-//        s.append("\n");
-//        for (int i = 0; i < V; i++){
-//            s.append(vertices.get(i).getNome()).append(": \t\t").append(dist[i]);
-//            s.append("\n");
-//        }        
-//        return  s.toString();
-//    }      
-//
-//    public String imprimirMatrizIncidencia(){
-//        int[][] matrizInc = new int[vertices.size()][arestas.size()];
-//        StringBuilder s = new StringBuilder();
-//        int i = 0;
-//        
-//        for (Aresta a : arestas){
-//            if (a.getOrigem() == a.getDestino()) {
-//                matrizInc[vertices.indexOf(a.getDestino())][arestas.indexOf(a)] = 2;
-//            }
-//            else{            
-//                matrizInc[vertices.indexOf(a.getDestino())][arestas.indexOf(a)] = 1;
-//                matrizInc[vertices.indexOf(a.getOrigem())][arestas.indexOf(a)] = 1;
-//            }
-//        }
-//
-//        for (int[] row : matrizInc) {                    
-//            s.append(vertices.get(i).getNome() + ": ");
-//            i++;
-//            
-//            for (int val : row) {
-//                s.append(val + " ");                
-//            }
-//            s.append("\n");
-//        }        
-//        return s.toString(); 
-//    }       
-//    
-//    public int [] gerarPrim(){                
-//        int V = vertices.size();
-//        int[][] grafo = gerarMatrixAdjacencia();
-//        int [][] matrAdjPrim = new int[vertices.size()][vertices.size()];   
-//        StringBuilder s = new StringBuilder();
-//        
-//        
-//        int parent[] = new int[V];
-//        int key[] = new int[V];
-// 
-//        boolean mstSet[] = new boolean[V];
-// 
-//        for (int i = 0; i < V; i++) {
-//            key[i] = Integer.MAX_VALUE;
-//            mstSet[i] = false;
-//        }
-//
-//        key[0] = 0; 
-//        parent[0] = -1;
-// 
-//        for (int count = 0; count < V - 1; count++) {
-//            int u = encontrarMenorDistancia(key, mstSet);
-//            mstSet[u] = true;
-//            for (int v = 0; v < V; v++)
-//                if (grafo[u][v] != 0 && mstSet[v] == false && grafo[u][v] < key[v]) {
-//                    parent[v] = u;
-//                    key[v] = grafo[u][v];
-//                }
-//        }
-//        return parent;   
-//    }    
-//
-//    public int [][] gerarPrimMatrizAdj(){        
-//        int [] parent = gerarPrim();
-//        int[][] grafo = gerarMatrixAdjacencia();
-//        int [][] matrAdjPrim = new int [vertices.size()][vertices.size()];
-//        
-//        for(int i = 1; i < vertices.size(); i++){
-//            matrAdjPrim[vertices.indexOf(vertices.get(parent[i]))][vertices.indexOf(vertices.get(i))] = grafo[i][parent[i]];
-//            matrAdjPrim[vertices.indexOf(vertices.get(i))][vertices.indexOf(vertices.get(parent[i]))] = grafo[i][parent[i]];         
-//        }                
-//        return  matrAdjPrim;
-//    };
-//
-//    public String imprimirPrim(){
-//        int V = vertices.size();   
-//        int [][] grafo = gerarMatrixAdjacencia();
-//        int [] parent = gerarPrim();
-//        StringBuilder s = new StringBuilder();        
-//        
-//        if(verificarConexo() == false){
-//            return "Não é possível gerar a árvore geradora mínima porque o grafo é desconexo.";
-//        }
-//        
-//        if(orientado == true){
-//            return "Não é possível gerar a árvore geradora mínima porque o grafo é orientado."; 
-//        }
-//        
-//        if(verificarLaço() == true){
-//            return "Não é possível gerar a árvore geradora mínima porque o grafo possui um laço.";
-//        }        
-//        
-//        s.append("Aresta \t| Peso");
-//        s.append("\n");
-//
-//        for (int i = 1; i < V; i++){
-//            String o = vertices.get(parent[i]).getNome();
-//            String d = vertices.get(i).getNome();
-//            
-//            
-//            s.append(o).append(" - ").append(d).append("\t  ").append(grafo[i][parent[i]]);
-//            s.append("\n");
-//        }                    
-//
-//        return s.toString();
-//        
-//    } 
-//    
-//    public String imprimirPrimMatrizAdj(){
-//
-//        int r[][] = gerarPrimMatrizAdj();
-//        StringBuilder s = new StringBuilder();
-//        
-//        if(verificarConexo() == false){
-//            return "Não é possível gerar a árvore geradora mínima porque o grafo é desconexo.";
-//        }
-//        
-//        if(orientado == true){
-//            return "Não é possível gerar a árvore geradora mínima porque o grafo é orientado."; 
-//        }
-//        
-//        if(verificarLaço() == true){
-//            return "Não é possível gerar a árvore geradora mínima porque o grafo possui um laço.";
-//        }                
-//        
-//        for (Vertice v : vertices)
-//        {
-//          s.append(v.getNome()).append(": ");
-//          
-//          for (int i = 0; i < vertices.size(); i++) {                
-//            s.append(r[vertices.indexOf(v)][i]).append(" ");
-//          }
-//          s.append("\n");                        
-//        }
-//        return s.toString(); 
-//        
-//    }
-//   
-//   public void acoplarArestasPesoMinimo(){
-//       int [][] grafoPrim = gerarPrimMatrizAdj();
-//       int [] grauVertices = new int [vertices.size()];
-//       
-//       for (int i = 0; i < grafoPrim.length; i++) {
-//           for (int j = 0; j < grafoPrim[i].length; j++) {
-//               grauVertices[i] = grauVertices[i] + grafoPrim[i][j];
-//           }
-//       }
-//       
-//       System.out.println(Arrays.toString(grauVertices));
-//       
-//       
-//   }
-//
+    
+    public boolean verificarCaminho(Vertice A, Vertice B){
+        int g[][] = gerarMatrizCaminho();
+        return g[vertices.indexOf(A)][vertices.indexOf(B)] == 1;
+    };
+    
+    public String imprimirCaminho(String v1, String v2){    
+        Vertice A = verticesMap.get(v1);
+        Vertice B = verticesMap.get(v2);
+
+        if (verificarCaminho(A, B))
+            return "Há caminho entre os dois vértices.";
+        else {
+            return "Não há um caminho entre os dois vértices.";  
+        }
+    }    
+    
+    public String imprimirMatrizCaminho(){
+        int g[][] = gerarMatrizCaminho();
+        StringBuilder s = new StringBuilder();
+        int i = 0;
+        for (int[] row : g) {                    
+            s.append(vertices.get(i).getNome()).append(": ");
+            i++;
+            
+            for (int val : row) {
+                s.append(val).append(" ");                
+            }
+            s.append("\n");
+        }        
+        return s.toString();
+    }     
+    
+    public int[] gerarDijkstra(){
+        
+        int V = vertices.size();
+        int grafo[][]= gerarMatrixAdjacencia();  
+        int src = 0;        
+        int dist[] = new int[V]; 
+        boolean sptSet[] = new boolean[V];
+        for (int i = 0; i < V; i++) {
+            dist[i] = Integer.MAX_VALUE;
+            sptSet[i] = false;
+        }
+
+
+        dist[src] = 0;
+        for (int count = 0; count < V - 1; count++) {
+            int u = encontrarMenorDistancia(dist, sptSet);
+            sptSet[u] = true;
+            for (int v = 0; v < V; v++)
+                if (!sptSet[v] && grafo[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + grafo[u][v] < dist[v])
+                    dist[v] = dist[u] + grafo[u][v];
+        }
+        return dist;        
+    }     
+    
+    int encontrarMenorDistancia(int dist[], boolean sptSet[]){
+        int V = vertices.size();        
+        int min = Integer.MAX_VALUE, min_index = -1;
+        for (int v = 0; v < V; v++)
+            if (sptSet[v] == false && dist[v] <= min) {
+                min = dist[v];
+                min_index = v;
+            }
+        return min_index;
+    }        
+    
+    public String imprimirDijkstra()    {
+        int dist[] = gerarDijkstra();         
+        StringBuilder s = new StringBuilder();
+        int V = vertices.size();
+        s.append("Vértice | Distância do vértice fonte");
+        s.append("\n");
+        for (int i = 0; i < V; i++){
+            s.append(vertices.get(i).getNome()).append(": \t\t").append(dist[i]);
+            s.append("\n");
+        }        
+        return  s.toString();
+    }      
+
+    public String imprimirMatrizIncidencia(){
+        int[][] matrizInc = new int[vertices.size()][arestas.size()];
+        StringBuilder s = new StringBuilder();
+        int i = 0;
+        
+        for (Aresta a : arestas){
+            if (a.getOrigem() == a.getDestino()) {
+                matrizInc[vertices.indexOf(a.getDestino())][arestas.indexOf(a)] = 2;
+            }
+            else{            
+                matrizInc[vertices.indexOf(a.getDestino())][arestas.indexOf(a)] = 1;
+                matrizInc[vertices.indexOf(a.getOrigem())][arestas.indexOf(a)] = 1;
+            }
+        }
+
+        for (int[] row : matrizInc) {                    
+            s.append(vertices.get(i).getNome() + ": ");
+            i++;
+            
+            for (int val : row) {
+                s.append(val + " ");                
+            }
+            s.append("\n");
+        }        
+        return s.toString(); 
+    }       
+
     public ArrayList<Vertice> getVertices() {
         return vertices;
     }
