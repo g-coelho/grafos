@@ -55,6 +55,21 @@ public class GrafoOrientado extends Grafo {
         }        
         return adjList;        
     }      
+    
+    @Override
+    public void gerarAleatorio() {        
+        String [] verticesExemplo = {"A","B", "C", "D", "E"};
+        String [] arestasExemploValorado = {"AB","AC","BB","BC","BD","CD","CD","CD","CE"}; 
+        
+        setValorado(true);
+        for(String v: verticesExemplo){
+            adicionarVertice(v);
+        }   
+        for (String a: arestasExemploValorado) {
+            adicionarAresta(Character.toString(a.charAt(0)), Character.toString(a.charAt(1)), 0);                
+        }
+}    
+    
 
     public String imprimriGrauEmissao(){
         HashMap<String, Integer> mapEmissao = mapearVertices();
@@ -143,6 +158,8 @@ public class GrafoOrientado extends Grafo {
         
         return  g; 
     }         
+
+
     
     
 }

@@ -74,6 +74,8 @@ public abstract class Grafo {
         adicionarAresta(origem, destino, valor);
     }
     
+    public abstract void gerarAleatorio();
+    
     public abstract int [][] gerarMatrixAdjacencia();    
     
     public String imprimirMatrizAdjacencia(){
@@ -338,6 +340,10 @@ public abstract class Grafo {
 
     public boolean isValorado() {
         return valorado;
+    }
+
+    public void setValorado(boolean valorado) {
+        this.valorado = valorado;
     }
  
 
