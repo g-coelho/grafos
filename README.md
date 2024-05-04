@@ -1,3 +1,13 @@
+# Graphs in Java
+
+  - Addition and removal of vertices and edges.
+  - Printing of graphs in adjacency matrix(connection matrix), incidence matrix, and adjacency list.
+  - Graph order, vertex degrees, emission and reception, connected or disconnected graph, regular and complete.
+  - Transitive closure.
+  - Minimum Path (Dijkstra).
+
+
+
 # Grafos em Java
 
 - Adição e remoção de vértices e arestas.
